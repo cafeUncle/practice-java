@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
 
-    static List<MachineClient> machineClientList = new ArrayList();
+    static List<MachineClient> machineClientList = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -23,23 +24,24 @@ public class Server {
                     InputStream inputStream = null;
                     try {
                         inputStream = accept.getInputStream();
-                        System.out.println(inputStream.toString());
-
-                        inputStream = accept.getInputStream();
-                        System.out.println(inputStream.toString());
-
-                        inputStream = accept.getInputStream();
-                        System.out.println(inputStream.toString());
-
-                        inputStream = accept.getInputStream();
-                        System.out.println(inputStream.toString());
+//                        System.out.println(inputStream.toString());
+//
+//                        inputStream = accept.getInputStream();
+//                        System.out.println(inputStream.toString());
+//
+//                        inputStream = accept.getInputStream();
+//                        System.out.println(inputStream.toString());
+//
+//                        inputStream = accept.getInputStream();
+//                        System.out.println(inputStream.toString());
 
                         int read = 0;
-                        byte[] bytes = new byte[1024];
+                        byte[] bytes = new byte[10];
                         while ((read = inputStream.read(bytes)) > 0) {
-                            System.out.println(new String(bytes,0 , read));
+                            System.out.println(new String(bytes,0 , read, "GBK"));
                         }
                     } catch (IOException e) {
+                        // 只有异常终止socket才会调用
                         machineClient.onClose();
 //                        e.printStackTrace();
                     }

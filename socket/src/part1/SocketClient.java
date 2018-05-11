@@ -1,28 +1,43 @@
 package part1;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class SocketClient {
+
+    static String ip = null;
+    static Integer port = null;
+
+    static {
+        Properties properties = new Properties();
+        try {
+//            properties.load(SocketClient.class.getClassLoader().getResourceAsStream("config.properties"));
+            properties.load(new FileInputStream("config.properties"));
+            ip = properties.getProperty("ip");
+            port = Integer.valueOf(properties.getProperty("port"));
+            properties.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         Socket socket = null;
         try {
-            socket = new Socket("localhost", 9090);
+            socket = new Socket(ip, port);
             OutputStream outputStream = socket.getOutputStream();
             BufferedOutputStream bo = new BufferedOutputStream(outputStream, 1024 * 100);
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                System.out.println("创建scanner");
                 String s = null;
                 if (scanner.hasNextLine()) {
                     s = scanner.nextLine();
                 }else {
+                    System.out.println("未发现");
                     continue;
                 }
-                System.out.println("键入：" + s);
 
                 if ("logout".equals(s)) {
                     break;
