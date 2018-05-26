@@ -25,6 +25,24 @@ public class SocketClient {
 
     public static void main(String[] args) {
         byte[] data = new byte[]
+                {(byte) 0x8e, 2, 3, 5, (byte) 0xED};
+        Socket socket = null;
+        try{
+            socket = new Socket(ip, port);
+            OutputStream outputStream = socket.getOutputStream();
+            BufferedOutputStream bo = new BufferedOutputStream(outputStream, 1024 * 100);
+            bo.write(data);
+            bo.flush();
+            bo.close();
+            socket.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void main2(String[] args) {
+        byte[] data = new byte[]
                 {142-256, 0, 23, 66, 74, 70, 76, 48, 48, 48, 48, 48, 48, 48, 48, 49, 1, 50, 0, 0, 1, 168-256, 237-256};
         Socket socket = null;
         try{
