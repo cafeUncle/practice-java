@@ -1,6 +1,7 @@
 package part1;
 
 import java.io.*;
+import java.net.Proxy;
 import java.net.Socket;
 import java.util.Properties;
 import java.util.Scanner;
@@ -28,7 +29,8 @@ public class SocketClient {
                 {(byte) 0x8e, 2, 3, 5, (byte) 0xED};
         Socket socket = null;
         try{
-            socket = new Socket(ip, port);
+//            socket = new Socket(ip, port);
+            socket = new Socket("tunnel.qydev.com", 6499);
             OutputStream outputStream = socket.getOutputStream();
             BufferedOutputStream bo = new BufferedOutputStream(outputStream, 1024 * 100);
             bo.write(data);
